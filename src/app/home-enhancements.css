@@ -49,15 +49,11 @@
 
 /* A full-width particle composition follows the supplied point-of-view image. */
 .point-of-view { position: relative; isolation: isolate; min-height: 690px; margin-top: 64px; padding-top: 76px; scroll-margin-top: 100px; background: radial-gradient(ellipse at 50% 0, rgb(49 215 255 / 6%), transparent 48%); }
-.perspective-copy { position: relative; z-index: 2; max-width: 800px; text-align: center; }
+.perspective-copy { position: relative; z-index: 2; pointer-events: none; max-width: 800px; text-align: center; }
 .perspective-copy .eyebrow { justify-content: center; margin-bottom: 24px; }
 .perspective-copy h2 { max-width: 21ch; margin-inline: auto; font-size: clamp(36px, 3.85vw, 56px); line-height: 1.1; letter-spacing: -0.045em; }
 .perspective-lede { max-width: 57ch; margin: 30px auto 0; color: var(--muted); font-size: 19px; line-height: 1.6; }
-.hands-art { position: absolute; inset: auto 0 0; height: 420px; }
-.hands-art canvas, .hands-fallback { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
-.hands-art canvas { opacity: 0; }
-.hands-art[data-ready="true"] canvas { opacity: 1; }
-.hands-art[data-ready="true"] .hands-fallback { opacity: 0; }
+.hands-art { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
 
 /* Sample work is labeled both in its content and on every visual. */
 #work .section-heading h2 { max-width: 23ch; }
