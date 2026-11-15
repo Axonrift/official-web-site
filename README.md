@@ -20,6 +20,7 @@ The homepage flows through the interactive hero, point of view, recent projects,
 - Edit `src/content/home.ts` for the headline, point-of-view copy, project cards, testimonials, services, FAQs, and inquiry topics.
 - Projects and testimonials are explicitly labeled placeholders. Replace the sample content and adjust its placeholder flags when approved real content is available.
 - `src/app/globals.css` holds shared tokens and base styling. `src/app/home-enhancements.css` holds the expanded homepage layouts, interactive field, project artwork, footer, and responsive hover states.
+- `src/app/themes.css` defines the dark and light palettes. The header theme switch is available on desktop and mobile, saves the choice locally, and syncs it between tabs. Dark is the first-visit default; a saved preference is applied in the head before the first paint. The switch still works when browser storage is unavailable.
 - Hero shapes and project thumbnails are native SVG/CSS artwork. The hand coordinates in `public/graphics/reaching-hands.json` were derived from the supplied point-of-view image; `reaching-hands.svg` provides a static fallback. Neither asset depends on a file outside the project at runtime.
 
 ## Motion and interaction

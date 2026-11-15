@@ -13,7 +13,9 @@ import { SiteHeader } from "@/components/site-header";
 export default function HomePage() {
   return (
     <PageMotion>
-      <a className="skip" href="#main">Skip to content</a>
+      <a className="skip" href="#main">
+        Skip to content
+      </a>
       <SiteHeader />
       <main id="main" tabIndex={-1}>
         <Hero />
