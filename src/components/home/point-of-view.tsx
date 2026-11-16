@@ -13,6 +13,9 @@ export function PointOfView() {
           background="transparent"
           accent="#28CCEF"
           offsetY={5}
+          scale={65}
+          mobileScale={95}
+          mobileOffsetY={-4}
         />
       </div>
     </section>

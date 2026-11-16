@@ -1583,7 +1583,7 @@
   }
 
   .point-of-view {
-    min-height: 590px;
+    min-height: auto;
     margin-top: 45px;
     padding-top: 46px;
   }
@@ -1599,12 +1599,16 @@
 
   .perspective-lede {
     max-width: 42ch;
-    margin-top: 24px;
+    margin-top: 18px;
     font-size: 16px;
   }
 
   .hands-art {
-    height: 280px;
+    position: relative;
+    inset: auto;
+    height: 310px;
+    margin-top: 0;
+    overflow: hidden;
   }
 
   .project-grid {
@@ -1819,7 +1823,7 @@
   }
 
   .point-of-view {
-    min-height: 610px;
+    min-height: auto;
   }
 
   .perspective-copy h2 {
@@ -1828,11 +1832,13 @@
 
   .perspective-lede {
     max-width: 31ch;
+    margin-top: 16px;
     font-size: 15px;
   }
 
   .hands-art {
-    height: 260px;
+    height: 280px;
+    margin-top: -6px;
   }
 
   .project-media {
