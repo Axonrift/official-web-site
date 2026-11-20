@@ -1198,9 +1198,6 @@
 
 .author-project-link:hover svg {
   transform: translate(2px, -2px);
-.testimonial figcaption div > span {
-  color: var(--subtle);
-  font-size: 11px;
 }
 
 .faq-section {

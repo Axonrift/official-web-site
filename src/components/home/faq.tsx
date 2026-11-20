@@ -57,9 +57,9 @@ export function Faq() {
   return (
     <section className="section wrap faq-section" id="faq" aria-labelledby="faq-title" ref={root}>
       <div className="faq-copy" data-reveal>
-
+        <p className="eyebrow"><span className="section-number">06 /</span>A little clarity</p>
         <h2 id="faq-title">Questions,<br /><span className="text-muted">answered.</span></h2>
-        <p>Something else on your mind?<br />Let’s work through it together.</p>
+        <p>Something else on your mind?<br />Let's work through it together.</p>
         <a className="quiet-link" href="#contact">Start a conversation <Icon name="up-right" /></a>
       </div>
       <div className="faq-list" data-reveal>
