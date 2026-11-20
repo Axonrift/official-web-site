@@ -77,24 +77,42 @@ export const pointOfView = {
     "Not another layer of technology. A better way to work. We bring product thinking and engineering together to build the right thing, then build it right.",
 };
 
-export const projects = [
+export type ProjectVisual = "website" | "mobile" | "mvp";
+
+export interface Project {
+  id: string;
+  title: string;
+  category: string;
+  description: string;
+  visual: ProjectVisual;
+  topic: string;
+  image?: string;
+  href?: string;
+  placeholder?: boolean;
+}
+
+export const projects: readonly Project[] = [
   {
     id: "website-preview",
     title: "A clearer digital presence.",
-    category: "Website & commerce",
+    category: "Sefia Books",
     description: "A sample website direction, ready for a real project story.",
     visual: "website",
     topic: "website",
-    placeholder: true,
+    image: "/images/mockup-sefia.webp",
+    href: "https://sefiabooks.lk/",
+    placeholder: false,
   },
   {
     id: "mobile-preview",
     title: "Small screen. Thoughtful details.",
-    category: "Mobile experience",
+    category: "Hidden Chapter Sefia Books",
     description: "An illustrative app concept, awaiting a client case study.",
     visual: "mobile",
     topic: "mobile",
-    placeholder: true,
+    image: "/images/mockup-ipad.webp",
+    href: "https://hiddensecrets.sefiabooks.lk/",
+    placeholder: false,
   },
   {
     id: "mvp-preview",
@@ -103,33 +121,46 @@ export const projects = [
     description: "A sample first-release concept, awaiting a real project.",
     visual: "mvp",
     topic: "mvp",
+    href: "",
     placeholder: true,
   },
 ] as const;
 
-export type Project = (typeof projects)[number];
+export interface TestimonialItem {
+  id: string;
+  name: string;
+  role: string;
+  company: string;
+  avatar: string;
+  leadQuote: string;
+  bodyQuote: string;
+  projectTitle: string;
+  projectHref: string;
+  metrics: readonly string[];
+}
+
+export const singleTestimonial: TestimonialItem = {
+  id: "nadiv-dulnith-sefia",
+  name: "Nadiv Dulnith",
+  role: "Author and Owner",
+  company: "Sefia Books",
+  avatar: "/images/nadiv-dulnith.webp",
+  leadQuote:
+    "Working with Axonrift has been a wonderful experience. From the beginning, the team was attentive to my ideas, communicated clearly, and provided excellent service throughout the development of my website.",
+  bodyQuote:
+    "I’m 100% satisfied with the experience and truly appreciate their commitment and support. I would happily recommend them to anyone looking for a dependable and skilled web partner.",
+  projectTitle: "sefiabooks.lk",
+  projectHref: "https://sefiabooks.lk/",
+  metrics: ["100% Satisfaction", "Web Design & Development", "Sefia Books"],
+};
 
 export const testimonials = [
   {
-    id: "perspective-01",
-    quote: "An approved client quote will live here.",
-    name: "Client name",
-    role: "Role, company",
-    placeholder: true,
-  },
-  {
-    id: "perspective-02",
-    quote: "Space for a client’s experience of the build.",
-    name: "Client name",
-    role: "Role, company",
-    placeholder: true,
-  },
-  {
-    id: "perspective-03",
-    quote: "The result, in the client’s own words.",
-    name: "Client name",
-    role: "Role, company",
-    placeholder: true,
+    id: singleTestimonial.id,
+    quote: `${singleTestimonial.leadQuote} ${singleTestimonial.bodyQuote}`,
+    name: singleTestimonial.name,
+    role: `${singleTestimonial.role}, ${singleTestimonial.company}`,
+    placeholder: false,
   },
 ] as const;
 

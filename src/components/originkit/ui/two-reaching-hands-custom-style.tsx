@@ -145,8 +145,12 @@ export interface CipherReachProps {
     columns?: number
     /** Size of the hands against the frame, in %. Below 100 the arms carry on off the sides. */
     scale?: number
+    /** Mobile-specific scale in % (applied when viewport width <= 768px). */
+    mobileScale?: number
     /** Vertical shift of the hands, in % of the frame's height. */
     offsetY?: number
+    /** Mobile-specific vertical shift in % (applied when viewport width <= 768px). */
+    mobileOffsetY?: number
     fill?: Partial<CipherReachFill>
     /** Colour of the lit glyphs and squares; the greys are shades of it. */
     glyphColor?: string
@@ -540,7 +544,9 @@ function __OriginkitBase_CipherReach({
     background = DEFAULTS.background,
     columns = DEFAULTS.columns,
     scale = DEFAULTS.scale,
+    mobileScale,
     offsetY = DEFAULTS.offsetY,
+    mobileOffsetY,
     fill = { "seed": 999, "density": 76, "edgeDensity": 100, "fingerDensity": 100 },
     glyphColor = DEFAULTS.glyphColor,
     accent = DEFAULTS.accent,
@@ -559,7 +565,9 @@ function __OriginkitBase_CipherReach({
     const live = {
         columns,
         scale,
+        mobileScale,
         offsetY,
+        mobileOffsetY,
         fill: { ...DEFAULT_FILL, ...fill },
         glyphColor,
         accent,
@@ -601,11 +609,29 @@ function __OriginkitBase_CipherReach({
 
         let visible = false
         let buildStart = -1
+        let inViewArea = false
+
         const io = new IntersectionObserver((entries) => {
             visible = entries[entries.length - 1].isIntersecting
-            console.log("[CipherReach] visible", visible)
         })
         io.observe(root)
+
+        const revealIo = new IntersectionObserver(
+            (entries) => {
+                const entry = entries[entries.length - 1]
+                if (entry.isIntersecting) {
+                    inViewArea = true
+                } else if (entry.boundingClientRect.top > (window.innerHeight || 0)) {
+                    buildStart = -1
+                    inViewArea = false
+                }
+            },
+            {
+                threshold: 0.1,
+                rootMargin: "0px 0px -8% 0px",
+            }
+        )
+        revealIo.observe(root)
 
         const mq = typeof window.matchMedia === "function" ? window.matchMedia("(prefers-reduced-motion: reduce)") : null
         let seedState = 0x2f6b1d37
@@ -678,10 +704,17 @@ function __OriginkitBase_CipherReach({
 
             // Layout: the still spans the width, centred; see MIN_ROWS_TALL.
             // `unit` is one of the still's cells in px, `cell` one render cell.
-            const unit = (Math.max(W / ART_COLS, H / MIN_ROWS_TALL) * clamp(p.scale, 10, 400)) / 100
+            const isMobile = W > 0 && W <= 768
+            const activeScale = isMobile && p.mobileScale != null
+                ? p.mobileScale
+                : isMobile
+                    ? Math.max(p.scale * 1.8, 95)
+                    : p.scale
+            const activeOffsetY = isMobile && p.mobileOffsetY != null ? p.mobileOffsetY : p.offsetY
+            const unit = (Math.max(W / ART_COLS, H / MIN_ROWS_TALL) * clamp(activeScale, 10, 400)) / 100
             const cell = unit * k
             const ox = W / 2 - (ART_COLS * unit) / 2
-            const oy = H / 2 - (ART_ROWS * unit) / 2 + (p.offsetY / 100) * H
+            const oy = H / 2 - (ART_ROWS * unit) / 2 + (activeOffsetY / 100) * H
 
             // Cells for what the frame shows, plus a margin for the hands'
             // reach and the pointer's push; rebuilt only when that changes.
@@ -700,8 +733,8 @@ function __OriginkitBase_CipherReach({
             // Arrival clock.
             const span = Math.max(0.05, p.buildTime)
             const buildEnd = BUILD_DELAY + span + BUILD_JITTER + BUILD_FLASH
-            if (buildStart < 0) buildStart = now
-            const bt = p.buildIn && !reduce ? (now - buildStart) / 1000 : buildEnd
+            if (inViewArea && buildStart < 0) buildStart = now
+            const bt = p.buildIn && !reduce ? (buildStart < 0 ? 0 : (now - buildStart) / 1000) : buildEnd
             const building = bt < buildEnd
 
             // Pointer: presence in ~250 ms, out in ~400 ms; position trails a little.
@@ -1039,6 +1072,7 @@ function __OriginkitBase_CipherReach({
             cancelAnimationFrame(raf)
             ro.disconnect()
             io.disconnect()
+            revealIo.disconnect()
             root.removeEventListener("pointermove", locate)
             root.removeEventListener("pointerenter", locate)
             root.removeEventListener("pointerleave", onLeave)

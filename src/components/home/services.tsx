@@ -10,15 +10,9 @@ export function Services() {
     >
       <div className="section-heading" data-reveal>
         <div>
-          <p className="eyebrow">
-            <span className="section-number">03 /</span>What we do
-          </p>
           <h2 id="services-title">What we can build for you.</h2>
         </div>
-        <p>
-          Bring us a clear brief or a problem you’re still figuring out. We’ll
-          help you decide what makes sense to build.
-        </p>
+        {/* <p>Bring us a clear brief or a problem you’re still figuring out. We’ll help you decide what makes sense to build.</p> */}
       </div>
       <div className="service-list">
         {services.map(({ id, title, description, action, icon }, index) => (

@@ -8,7 +8,6 @@ export function SiteFooter() {
       <div className="wrap">
         <div className="footer-top">
           <div className="footer-invitation" data-reveal>
-            <p className="eyebrow"><span className="dot" />One good conversation can change things.</p>
             <h2>Let’s build<br /><span className="text-accent">what’s next.</span></h2>
             <a className="button button-arrow" href="#contact">Start a project <span><Icon name="arrow" /></span></a>
           </div>
@@ -26,7 +25,9 @@ export function SiteFooter() {
           </div>
         </div>
         <a className="footer-wordmark" href="#top" aria-label="Axonrift home"><BrandWordmark /></a>
-        <div className="footer-bottom"><p>© Axonrift</p><span>Software, with a different perspective.</span><a className="quiet-link" href="#top">Back to top <Icon name="up-right" /></a></div>
+        <div className="footer-bottom"><p>© Axonrift 2026</p>
+          {/* <span>Software, with a different perspective.</span> */}
+          <a className="quiet-link" href="#top">Back to top <Icon name="up-right" /></a></div>
       </div>
     </footer>
   );

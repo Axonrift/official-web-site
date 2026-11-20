@@ -119,7 +119,6 @@ export function HeroField() {
   return (
     <div className="geometric-field" ref={root} aria-hidden="true">
       <div className="field-grid" />
-      <span className="field-coordinate">AX / A DIFFERENT PERSPECTIVE</span>
       {objects.map((object, index) => (
         <div className={`field-object object-${object.tone}`} data-object data-rotation={object.rotation} key={index}
           style={{ "--x": object.x, "--y": object.y, "--size": `${object.size}px`, "--rotation": `${object.rotation}deg` } as CSSProperties}>
@@ -127,13 +126,12 @@ export function HeroField() {
             <svg className="object-shape" viewBox="0 0 100 100">
               {object.shape === "mark" ? <image href="/brand/axonrift-mark.png" width="100" height="100" preserveAspectRatio="xMidYMid meet" />
                 : object.shape === "ring" ? <><circle cx="50" cy="50" r="34" fill="none" stroke="currentColor" strokeWidth="25" /><path className="object-facet" d="M50 3a47 47 0 0 1 47 47H72A22 22 0 0 0 50 28Z" /></>
-                : object.shape === "angle" ? <><path d="M3 3h94v94H66V34H3Z" /><path className="object-facet" d="M66 34h31v63H66Z" /></>
-                : <><rect x="3" y="3" width="94" height="94" rx="20" /><path className="object-facet" d="M3 65 65 3h12a20 20 0 0 1 20 20v12L35 97H23A20 20 0 0 1 3 77Z" /></>}
+                  : object.shape === "angle" ? <><path d="M3 3h94v94H66V34H3Z" /><path className="object-facet" d="M66 34h31v63H66Z" /></>
+                    : <><rect x="3" y="3" width="94" height="94" rx="20" /><path className="object-facet" d="M3 65 65 3h12a20 20 0 0 1 20 20v12L35 97H23A20 20 0 0 1 3 77Z" /></>}
             </svg>
           </div>
         </div>
       ))}
-      <span className="field-caption"><span className="dot" />A little interaction. A new possibility.</span>
     </div>
   );
 }

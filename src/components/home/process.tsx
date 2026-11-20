@@ -5,7 +5,6 @@ export function Process() {
     <section className="section wrap" id="process" aria-labelledby="process-title">
       <div className="section-heading" data-reveal>
         <div>
-          <p className="eyebrow"><span className="section-number">05 /</span>How we work</p>
           <h2 id="process-title">From problem to working software.</h2>
         </div>
       </div>
