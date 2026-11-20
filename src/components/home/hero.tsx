@@ -8,12 +8,21 @@ export function Hero() {
       <div className="hero-copy">
         <h1 id="hero-title">
           {hero.title.map((line, index) => (
-            <span className={index === hero.title.length - 1 ? "text-accent" : undefined} data-hero-line key={line}>
-              {line}{index < hero.title.length - 1 ? " " : ""}
+            <span
+              className={
+                index === hero.title.length - 1 ? "text-accent" : undefined
+              }
+              data-hero-line
+              key={line}
+            >
+              {line}
+              {index < hero.title.length - 1 ? " " : ""}
             </span>
           ))}
         </h1>
-        <p className="hero-lede" data-hero-detail>{hero.description}</p>
+        <p className="hero-lede" data-hero-detail>
+          {hero.description}
+        </p>
         <div className="hero-actions" data-hero-detail>
           <a className="button button-arrow" href="#contact">
             Tell us your problem{" "}
@@ -32,7 +41,10 @@ export function Hero() {
       {/* <div className="hero-bottom" data-hero-detail>
         <p className="micro-label">Ideas into working software</p>
         <ul className="hero-capabilities" aria-label="Our capabilities">
-          <li>Web</li><li>Mobile</li><li>Custom SaaS</li><li>MVPs</li>
+          <li>Web</li>
+          <li>Mobile</li>
+          <li>Custom SaaS</li>
+          <li>MVPs</li>
         </ul>
         <a className="hero-scroll" href="#about">A different perspective <Icon name="arrow" /></a>
       </div> */}

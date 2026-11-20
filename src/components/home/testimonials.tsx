@@ -6,7 +6,11 @@ export function Testimonials() {
   const { name, role, company, avatar, leadQuote, bodyQuote, projectTitle, projectHref, metrics } = singleTestimonial;
 
   return (
-    <section className="section wrap" id="testimonials" aria-labelledby="testimonials-title">
+    <section
+      className="section wrap"
+      id="testimonials"
+      aria-labelledby="testimonials-title"
+    >
       <div className="section-heading" data-reveal>
         <div>
           <h2 id="testimonials-title">

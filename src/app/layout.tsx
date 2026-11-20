@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { themeInitScript } from "@/lib/theme";
 
 import "@fontsource-variable/inter-tight";
 import "./globals.css";
 import "./home-enhancements.css";
+import "./themes.css";
 
 export const metadata: Metadata = {
   title: "Axonrift — Software for your business",
@@ -15,8 +17,10 @@ export const viewport: Viewport = { themeColor: "#0a1015" };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body id="top">
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
+      <head><script id="theme-init" dangerouslySetInnerHTML={{ __html: themeInitScript }} /></head>
+      {/* Browser extensions can add body attributes before React hydrates. */}
+      <body id="top" suppressHydrationWarning>
         <svg className="brand-definitions" width="0" height="0" aria-hidden="true" focusable="false">
           <defs>
             <filter id="axonrift-wordmark-light" colorInterpolationFilters="sRGB">

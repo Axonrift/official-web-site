@@ -1,0 +1,305 @@
+/* Theme colors describe their UI roles; cyan remains the brand color in both. */
+:root {
+  --accent-ink: #31d7ff;
+  --on-accent: #0a1015;
+  --focus-ring: #31d7ff;
+  --field: #0d151b;
+  --field-border: #41515d;
+  --field-border-hover: #657986;
+  --contact-action: var(--brand-accent);
+  --contact-action-hover: var(--brand-hover);
+  --contact-action-ink: var(--on-accent);
+  --contact-error: #ffb4ab;
+  --border-strong: #415663;
+  --header: rgb(18 26 33 / 88%);
+  --header-compact: rgb(18 26 33 / 94%);
+  --header-border: rgb(165 178 186 / 16%);
+  --surface-hover: #15212a;
+  --surface-hover-border: #3f6172;
+  --badge: #101b23;
+  --badge-ink: #c4d3db;
+  --footer: #0c141a;
+  --object-cyan: #31d7ff;
+  --object-cyan-dark: #157a94;
+  --object-slate: #2e4555;
+  --object-paper: #d8e6ec;
+  --grid-line: rgb(49 215 255 / 6%);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --page: #f5f7f8;
+  --surface: #ffffff;
+  --elevated: #eaf0f4;
+  --ink: #101d27;
+  --muted: #4d6472;
+  --subtle: #5b7180;
+  --border: #cdd9e1;
+  --brand-hover: #22c9f2;
+  --accent-ink: #006c84;
+  --focus-ring: #007c98;
+  --field: #f7fafb;
+  --field-border: #95abb9;
+  --field-border-hover: #5e7e91;
+  --contact-action: var(--brand-accent);
+  --contact-action-hover: var(--brand-hover);
+  --contact-action-ink: var(--on-accent);
+  --contact-error: #b3261e;
+  --border-strong: #a8bcc9;
+  --header: rgb(255 255 255 / 90%);
+  --header-compact: rgb(255 255 255 / 96%);
+  --header-border: rgb(61 99 122 / 20%);
+  --surface-hover: #eef6f9;
+  --surface-hover-border: #83b6c5;
+  --badge: #e5edf2;
+  --badge-ink: #3c5666;
+  --footer: #eaf1f5;
+  --object-cyan: #08a8cd;
+  --object-cyan-dark: #006d85;
+  --object-slate: #b4c8d3;
+  --object-paper: #334d5d;
+  --grid-line: rgb(16 74 94 / 10%);
+}
+
+.wordmark-auto image {
+  filter: url(#axonrift-wordmark-light);
+}
+:root[data-theme="light"] .wordmark-auto image {
+  filter: none;
+}
+::selection {
+  color: var(--on-accent);
+}
+:focus-visible {
+  outline-color: var(--focus-ring);
+}
+.text-accent,
+.section-number,
+.process-number,
+.quote-mark,
+.faq-plus {
+  color: var(--accent-ink);
+}
+.quiet-link:is(:hover, :focus-visible),
+.hero-scroll:is(:hover, :focus-visible),
+.footer-links a:is(:hover, :focus-visible),
+.footer-bottom .quiet-link:is(:hover, :focus-visible),
+.faq-item summary:is(:hover, :focus-visible) {
+  color: var(--accent-ink);
+}
+.skip,
+.button {
+  color: var(--on-accent);
+}
+.button-outline {
+  color: var(--ink);
+  border-color: var(--border-strong);
+}
+.button-outline:is(:hover, :focus-visible),
+.service:is(:hover, :focus-within) .service-link {
+  color: var(--on-accent);
+}
+.service:is(:hover, :focus-within) .service-icon {
+  color: var(--accent-ink);
+}
+.service:is(:hover, :focus-within) {
+  border-top-color: var(--accent-ink);
+}
+.hero-capabilities li + li::before {
+  color: var(--accent-ink);
+}
+.process-grid article::before {
+  border-color: var(--accent-ink);
+}
+.process-track > span {
+  background: var(--accent-ink);
+}
+
+.header-bar {
+  background: var(--header);
+  border-color: var(--header-border);
+}
+.site-header[data-compact="true"][data-expanded="false"] .header-bar {
+  width: 500px;
+  background: var(--header-compact);
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+  gap: 10px;
+  min-width: 0;
+}
+.theme-toggle {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--muted);
+  background: transparent;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+.theme-toggle:is(:hover, :focus-visible) {
+  color: var(--accent-ink);
+  background: var(--elevated);
+  border-color: var(--field-border-hover);
+}
+.theme-toggle svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.theme-toggle > span {
+  grid-area: 1 / 1;
+  transition:
+    opacity 180ms ease,
+    transform 250ms var(--ease-soft);
+}
+.theme-moon {
+  opacity: 0;
+  transform: rotate(-45deg) scale(0.65);
+}
+:root[data-theme="light"] .theme-sun {
+  opacity: 0;
+  transform: rotate(45deg) scale(0.65);
+}
+:root[data-theme="light"] .theme-moon {
+  opacity: 1;
+  transform: none;
+}
+.mobile-menu nav {
+  background: var(--surface);
+  border-color: var(--field-border);
+}
+.mobile-menu nav a:is(:hover, :focus-visible),
+.mobile-menu nav a:last-child {
+  color: var(--accent-ink);
+}
+.menu-symbol i {
+  background: var(--accent-ink);
+}
+
+.object-cyan {
+  color: var(--object-cyan);
+}
+.object-cyan-dark {
+  color: var(--object-cyan-dark);
+}
+.object-slate {
+  color: var(--object-slate);
+}
+.object-paper {
+  color: var(--object-paper);
+}
+.field-grid {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+}
+/* The source particles stay unchanged; the composited hand layer becomes
+   deep teal and ink in light mode without restarting its animation. */
+:root[data-theme="light"] .hands-art {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+.project-media {
+  border-color: var(--border-strong);
+}
+.project-link:is(:hover, :focus-visible) .project-media {
+  border-color: var(--accent-ink);
+}
+.project-arrow {
+  color: var(--accent-ink);
+}
+.sample-badge {
+  color: var(--badge-ink);
+  background: var(--badge);
+  border-color: var(--border-strong);
+}
+.testimonial:hover {
+  background: var(--surface-hover);
+  border-color: var(--surface-hover-border);
+}
+.quote-avatar {
+  border-color: var(--border-strong);
+}
+
+input,
+select,
+textarea {
+  background: var(--field);
+  border-color: var(--field-border);
+}
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: var(--field-border-hover);
+}
+input:autofill {
+  box-shadow: inset 0 0 0 100px var(--field);
+}
+dialog {
+  border-color: var(--field-border);
+}
+.close-button {
+  border-color: var(--field-border-hover);
+}
+.close-button:hover {
+  border-color: var(--accent-ink);
+}
+.site-footer {
+  background:
+    radial-gradient(ellipse at 10% 0, rgb(49 215 255 / 4%), transparent 55%),
+    var(--footer);
+}
+:root[data-theme="light"] dialog::backdrop {
+  background: rgb(9 30 44 / 45%);
+}
+:root[data-theme="light"] .header-bar {
+  box-shadow: 0 8px 30px rgb(16 38 52 / 5%);
+}
+
+@media (max-width: 940px) {
+  .site-header[data-compact="true"][data-expanded="false"] .header-bar {
+    width: min(1320px, calc(100% - var(--gutter) * 2));
+  }
+  .header-actions {
+    gap: 8px;
+  }
+  .header-bar {
+    column-gap: 12px;
+    transition:
+      background-color 250ms var(--ease-soft),
+      border-color 250ms var(--ease-soft);
+  }
+}
+@media (max-width: 380px) {
+  .mobile-menu .menu-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .mobile-menu summary {
+    width: 44px;
+    padding-inline: 0;
+  }
+  .header-bar .wordmark {
+    width: 128px;
+  }
+}
