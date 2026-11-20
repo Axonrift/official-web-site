@@ -594,7 +594,6 @@ export function InteractivePattern() {
           href="#contact"
           className={`feel-interested-btn ${textVisible ? "text-active" : ""}`}
           onClick={handleButtonClick}
-          data-inquiry-topic="mvp"
           aria-label="Feel Interested? Go to inquiry section"
         >
           <span className="btn-text-wrapper">

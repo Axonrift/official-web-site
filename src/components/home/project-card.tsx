@@ -39,7 +39,6 @@ export function ProjectCard({ project }: { project: Project }) {
         <div
           className="project-link project-link-interactive"
           ref={link as React.RefObject<HTMLDivElement>}
-          data-inquiry-topic={project.topic}
           aria-label={`${project.title} — ${project.category}`}
         >
           <div className="project-media">
@@ -53,22 +52,26 @@ export function ProjectCard({ project }: { project: Project }) {
 
   return (
     <article className={`project-card project-${project.visual}`} data-reveal>
-      <a
+      <div
         className="project-link"
-        ref={link as React.RefObject<HTMLAnchorElement>}
-        href={targetHref}
-        target={isExternal ? "_blank" : undefined}
-        rel={isExternal ? "noreferrer noopener" : undefined}
-        data-inquiry-topic={project.topic}
+        ref={link as React.RefObject<HTMLDivElement>}
         aria-label={`${project.title} — ${project.category}`}
       >
         <div className="project-media">
           <ProjectArtwork kind={project.visual} image={project.image} />
           <span className="project-dither" aria-hidden="true" />
           <span className="project-category">{project.category}</span>
-          <span className="project-arrow"><Icon name="up-right" /></span>
+          <a
+            className="project-arrow"
+            href={targetHref}
+            target={isExternal ? "_blank" : undefined}
+            rel={isExternal ? "noreferrer noopener" : undefined}
+            aria-label={`Visit ${project.category} website`}
+          >
+            <Icon name="up-right" />
+          </a>
         </div>
-      </a>
+      </div>
     </article>
   );
 }
