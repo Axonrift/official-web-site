@@ -8,7 +8,7 @@ export function PointOfView() {
         <h2 id="perspective-title">{pointOfView.title}</h2>
         <p className="perspective-lede">{pointOfView.description}</p>
       </div>
-      <div className="hands-art" aria-hidden="true">
+      <div className="hands-art" aria-hidden="true" data-reveal>
         <CipherReach
           background="transparent"
           accent="#28CCEF"

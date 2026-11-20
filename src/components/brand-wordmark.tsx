@@ -12,7 +12,7 @@ export function BrandWordmark({
     >
       <image
         href="/brand/axonrift-wordmark.png"
-        width="1400"
+        width="2048"
         height="447"
         filter={tone === "light" ? "url(#axonrift-wordmark-light)" : undefined}
       />

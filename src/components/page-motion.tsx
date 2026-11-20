@@ -84,33 +84,43 @@ export function PageMotion({ children }: { children: ReactNode }) {
           ) {
             gsap
               .timeline({ defaults: { ease: "power3.out" } })
+              .from(".header-bar", {
+                opacity: 0,
+                y: -14,
+                filter: "blur(10px)",
+                duration: 0.7,
+                clearProps: "transform,opacity,filter",
+              })
               .from("[data-hero-eyebrow]", {
                 opacity: 0,
                 y: 12,
+                filter: "blur(8px)",
                 duration: 0.6,
-                clearProps: "transform,opacity",
-              })
+                clearProps: "transform,opacity,filter",
+              }, 0.1)
               .from(
                 "[data-hero-line]",
                 {
                   opacity: 0,
                   y: 32,
+                  filter: "blur(10px)",
                   duration: 0.9,
                   stagger: 0.08,
-                  clearProps: "transform,opacity",
+                  clearProps: "transform,opacity,filter",
                 },
-                0.08,
+                0.15,
               )
               .from(
                 "[data-hero-detail]",
                 {
                   opacity: 0,
                   y: 16,
+                  filter: "blur(8px)",
                   duration: 0.7,
                   stagger: 0.08,
-                  clearProps: "transform,opacity",
+                  clearProps: "transform,opacity,filter",
                 },
-                0.28,
+                0.35,
               )
               .from(
                 "[data-hero-art]",
@@ -118,10 +128,11 @@ export function PageMotion({ children }: { children: ReactNode }) {
                   opacity: 0,
                   scale: 0.92,
                   rotation: -4,
+                  filter: "blur(12px)",
                   duration: 1.1,
-                  clearProps: "transform,opacity",
+                  clearProps: "transform,opacity,filter",
                 },
-                0.08,
+                0.15,
               );
           }
 
@@ -139,10 +150,11 @@ export function PageMotion({ children }: { children: ReactNode }) {
                 element,
                 gsap.from(element, {
                   opacity: 0,
-                  y: 20,
-                  duration: 0.65,
-                  ease: "power3.out",
-                  clearProps: "transform,opacity",
+                  y: 28,
+                  filter: "blur(12px)",
+                  duration: 0.8,
+                  ease: "power2.out",
+                  clearProps: "transform,opacity,filter",
                   scrollTrigger: {
                     trigger: element,
                     start: "top 88%",

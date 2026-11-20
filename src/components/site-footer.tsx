@@ -24,8 +24,8 @@ export function SiteFooter() {
             </nav>
           </div>
         </div>
-        <a className="footer-wordmark" href="#top" aria-label="Axonrift home"><BrandWordmark /></a>
-        <div className="footer-bottom"><p>© Axonrift 2026</p><span>Software, with a different perspective.</span><a className="quiet-link" href="#top">Back to top <Icon name="up-right" /></a></div>
+        <a className="footer-wordmark" href="#top" aria-label="Axonrift home" data-reveal><BrandWordmark /></a>
+        <div className="footer-bottom" data-reveal><p>© Axonrift 2026</p><span>Software, with a different perspective.</span><a className="quiet-link" href="#top">Back to top <Icon name="up-right" /></a></div>
       </div>
     </footer>
   );
