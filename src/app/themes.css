@@ -6,6 +6,10 @@
   --field: #0d151b;
   --field-border: #41515d;
   --field-border-hover: #657986;
+  --contact-action: var(--brand-accent);
+  --contact-action-hover: var(--brand-hover);
+  --contact-action-ink: var(--on-accent);
+  --contact-error: #ffb4ab;
   --border-strong: #415663;
   --header: rgb(18 26 33 / 88%);
   --header-compact: rgb(18 26 33 / 94%);
@@ -37,6 +41,10 @@
   --field: #f7fafb;
   --field-border: #95abb9;
   --field-border-hover: #5e7e91;
+  --contact-action: var(--brand-accent);
+  --contact-action-hover: var(--brand-hover);
+  --contact-action-ink: var(--on-accent);
+  --contact-error: #b3261e;
   --border-strong: #a8bcc9;
   --header: rgb(255 255 255 / 90%);
   --header-compact: rgb(255 255 255 / 96%);

@@ -19,6 +19,7 @@ export const services = [
     description:
       "Fast, polished websites and online stores that make it easy for customers to find you, get in touch, and buy.",
     topic: "Website or online store",
+    inquiryLabel: "Websites",
     action: "Discuss a website or online store",
     icon: "window",
   },
@@ -28,6 +29,7 @@ export const services = [
     description:
       "iOS and Android apps that make it easier for customers to book, shop, or use your service on the go.",
     topic: "Mobile app",
+    inquiryLabel: "Mobile apps",
     action: "Discuss a mobile app",
     icon: "mobile",
   },
@@ -37,6 +39,7 @@ export const services = [
     description:
       "Subscription software designed around how your customers sign up, use the product, and pay.",
     topic: "Custom SaaS development",
+    inquiryLabel: "SaaS platforms",
     action: "Discuss custom SaaS development",
     icon: "layers",
   },
@@ -46,6 +49,7 @@ export const services = [
     description:
       "A working first version you can test with real users, demo to investors, and improve with feedback.",
     topic: "MVP",
+    inquiryLabel: "MVPs",
     action: "Discuss an MVP",
     icon: "box",
   },
@@ -59,9 +63,12 @@ export const product = {
   topic: "Axonrift’s SaaS product",
 };
 
+export const contactEmail = "contact@axonrift.com";
+
 export const inquiryTopics = [
-  ...services,
-  { id: "other", topic: "Something else" },
+  ...services.map(({ id, topic, inquiryLabel, icon }) => ({ id, topic, label: inquiryLabel, icon })),
+  { id: "ai-automation", topic: "AI automation", label: "AI automation", icon: "sparkles" as const },
+  { id: "other", topic: "Something else", label: "Something else", icon: "message" as const },
 ];
 
 export const pointOfView = {
