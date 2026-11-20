@@ -10,7 +10,7 @@ import type { Project } from "@/content/home";
 gsap.registerPlugin(useGSAP);
 
 export function ProjectCard({ project }: { project: Project }) {
-  const link = useRef<HTMLAnchorElement>(null);
+  const link = useRef<HTMLElement>(null);
 
   useGSAP(() => {
     const media = gsap.matchMedia();
@@ -30,17 +30,44 @@ export function ProjectCard({ project }: { project: Project }) {
     return () => media.revert();
   }, { scope: link });
 
+  const targetHref = project.href && project.href.trim() ? project.href : "#contact";
+  const isExternal = Boolean(project.href && /^https?:\/\//i.test(project.href));
+
+  if (project.visual === "mvp") {
+    return (
+      <article className={`project-card project-${project.visual}`} data-reveal>
+        <div
+          className="project-link project-link-interactive"
+          ref={link as React.RefObject<HTMLDivElement>}
+          data-inquiry-topic={project.topic}
+          aria-label={`${project.title} — ${project.category}`}
+        >
+          <div className="project-media">
+            <ProjectArtwork kind={project.visual} image={project.image} />
+            <span className="project-dither" aria-hidden="true" />
+          </div>
+        </div>
+      </article>
+    );
+  }
+
   return (
     <article className={`project-card project-${project.visual}`} data-reveal>
-      <a className="project-link" ref={link} href="#contact" data-inquiry-topic={project.topic} aria-label={`Discuss a similar ${project.category.toLowerCase()} project`}>
+      <a
+        className="project-link"
+        ref={link as React.RefObject<HTMLAnchorElement>}
+        href={targetHref}
+        target={isExternal ? "_blank" : undefined}
+        rel={isExternal ? "noreferrer noopener" : undefined}
+        data-inquiry-topic={project.topic}
+        aria-label={`${project.title} — ${project.category}`}
+      >
         <div className="project-media">
-          <ProjectArtwork kind={project.visual} />
+          <ProjectArtwork kind={project.visual} image={project.image} />
           <span className="project-dither" aria-hidden="true" />
           <span className="project-category">{project.category}</span>
-          {project.placeholder && <span className="sample-badge">Placeholder project</span>}
           <span className="project-arrow"><Icon name="up-right" /></span>
         </div>
-        <div className="project-caption"><h3>{project.title}</h3><p>{project.description}</p></div>
       </a>
     </article>
   );

@@ -6,10 +6,6 @@ export function Hero() {
   return (
     <section className="hero wrap" aria-labelledby="hero-title">
       <div className="hero-copy">
-        <p className="eyebrow" data-hero-eyebrow>
-          <span className="dot" />
-          {hero.eyebrow}
-        </p>
         <h1 id="hero-title">
           {hero.title.map((line, index) => (
             <span className={index === hero.title.length - 1 ? "text-accent" : undefined} data-hero-line key={line}>
@@ -33,13 +29,13 @@ export function Hero() {
       <div className="hero-art" aria-hidden="true" data-hero-art>
         <HeroField />
       </div>
-      <div className="hero-bottom" data-hero-detail>
+      {/* <div className="hero-bottom" data-hero-detail>
         <p className="micro-label">Ideas into working software</p>
         <ul className="hero-capabilities" aria-label="Our capabilities">
           <li>Web</li><li>Mobile</li><li>Custom SaaS</li><li>MVPs</li>
         </ul>
         <a className="hero-scroll" href="#about">A different perspective <Icon name="arrow" /></a>
-      </div>
+      </div> */}
     </section>
   );
 }
