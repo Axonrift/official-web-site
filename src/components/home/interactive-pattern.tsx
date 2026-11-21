@@ -94,16 +94,6 @@ export function InteractivePattern() {
   const buttonReadyRef = useRef(false);
   const textVisibleRef = useRef(false);
 
-  const handleButtonClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const contact = document.getElementById("contact");
-    if (contact) {
-      contact.scrollIntoView({ behavior: "smooth" });
-      window.history.pushState(null, "", "#contact");
-    }
-  }, []);
-
   const triggerTransition = useCallback((clickX: number, clickY: number) => {
     if (isTransitionStartedRef.current) return;
     isTransitionStartedRef.current = true;
@@ -266,7 +256,7 @@ export function InteractivePattern() {
       pointer.vy = 0;
     }
 
-    function onPointerDown(e: PointerEvent) {
+    function activatePattern(e: PointerEvent) {
       const rect = container?.getBoundingClientRect();
       if (!rect) return;
       const px = e.clientX - rect.left;
@@ -285,10 +275,19 @@ export function InteractivePattern() {
       triggerTransition(px, py);
     }
 
+    function onPointerDown(e: PointerEvent) {
+      if (e.pointerType !== "touch") activatePattern(e);
+    }
+
+    function onPointerUp(e: PointerEvent) {
+      if (e.pointerType === "touch") activatePattern(e);
+    }
+
     container.addEventListener("pointermove", onPointerMove, { passive: true });
     container.addEventListener("pointerenter", onPointerEnter, { passive: true });
     container.addEventListener("pointerleave", onPointerLeave, { passive: true });
     container.addEventListener("pointerdown", onPointerDown, { passive: true });
+    container.addEventListener("pointerup", onPointerUp, { passive: true });
 
     let lastTime = performance.now();
     let time = 0;
@@ -564,6 +563,7 @@ export function InteractivePattern() {
       container.removeEventListener("pointerenter", onPointerEnter);
       container.removeEventListener("pointerleave", onPointerLeave);
       container.removeEventListener("pointerdown", onPointerDown);
+      container.removeEventListener("pointerup", onPointerUp);
     };
   }, [triggerTransition]);
 
@@ -578,7 +578,7 @@ export function InteractivePattern() {
         overflow: "hidden",
         backgroundColor: "#070b0e",
         cursor: buttonReady ? "default" : "pointer",
-        touchAction: "none",
+        touchAction: "pan-y pinch-zoom",
       }}
     >
       <canvas
@@ -593,7 +593,6 @@ export function InteractivePattern() {
         <a
           href="#contact"
           className={`feel-interested-btn ${textVisible ? "text-active" : ""}`}
-          onClick={handleButtonClick}
           aria-label="Feel Interested? Go to inquiry section"
         >
           <span className="btn-text-wrapper">

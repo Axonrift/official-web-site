@@ -4,6 +4,7 @@ import { useEffect, useRef, type ReactNode } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { enableSmoothWheel } from "@/lib/smooth-wheel";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -71,9 +72,10 @@ export function PageMotion({ children }: { children: ReactNode }) {
           finePointer: "(hover: hover) and (pointer: fine)",
         },
         (context) => {
-          const { reduce, wide } = context.conditions ?? {};
+          const { reduce, wide, finePointer } = context.conditions ?? {};
           const container = root.current;
           if (reduce || !container) return;
+          const disableSmoothWheel = finePointer ? enableSmoothWheel() : undefined;
 
           const hero = container.querySelector<HTMLElement>(".hero");
           if (
@@ -150,11 +152,10 @@ export function PageMotion({ children }: { children: ReactNode }) {
                 element,
                 gsap.from(element, {
                   opacity: 0,
-                  y: 28,
-                  filter: "blur(12px)",
-                  duration: 0.8,
+                  y: 18,
+                  duration: 0.55,
                   ease: "power2.out",
-                  clearProps: "transform,opacity,filter",
+                  clearProps: "transform,opacity",
                   scrollTrigger: {
                     trigger: element,
                     start: "top 88%",
@@ -221,6 +222,7 @@ export function PageMotion({ children }: { children: ReactNode }) {
 
           return () => {
             active = false;
+            disableSmoothWheel?.();
             container.removeEventListener("focusin", revealFocusedContent);
             window.removeEventListener("hashchange", revealHashTarget);
           };

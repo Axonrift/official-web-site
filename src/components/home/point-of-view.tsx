@@ -3,7 +3,7 @@ import { pointOfView } from "@/content/home";
 
 export function PointOfView() {
   return (
-    <section className="point-of-view" id="about" aria-labelledby="perspective-title">
+    <section className="point-of-view wrap" id="about" aria-labelledby="perspective-title">
       <div className="perspective-copy wrap" data-reveal>
         <h2 id="perspective-title">{pointOfView.title}</h2>
         <p className="perspective-lede">{pointOfView.description}</p>

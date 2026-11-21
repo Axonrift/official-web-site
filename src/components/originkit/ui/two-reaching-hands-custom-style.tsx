@@ -141,6 +141,8 @@ export interface CipherReachShimmer {
 
 export interface CipherReachProps {
     background?: string
+    /** Draw the cursor-lit grid as a background for the surrounding section. */
+    patternOnly?: boolean
     /** Cells across the art. 96 is the still's own grid; above it there is no more detail to draw. */
     columns?: number
     /** Size of the hands against the frame, in %. Below 100 the arms carry on off the sides. */
@@ -542,6 +544,7 @@ function makeGrain() {
 
 function __OriginkitBase_CipherReach({
     background = DEFAULTS.background,
+    patternOnly = false,
     columns = DEFAULTS.columns,
     scale = DEFAULTS.scale,
     mobileScale,
@@ -631,7 +634,7 @@ function __OriginkitBase_CipherReach({
                 rootMargin: "0px 0px -8% 0px",
             }
         )
-        revealIo.observe(root)
+        if (!patternOnly) revealIo.observe(root)
 
         const mq = typeof window.matchMedia === "function" ? window.matchMedia("(prefers-reduced-motion: reduce)") : null
         let seedState = 0x2f6b1d37
@@ -649,7 +652,7 @@ function __OriginkitBase_CipherReach({
         let atlasKey = ""
         let dots: HTMLCanvasElement | null = null
         let dotKey = ""
-        const grainPattern = ctx.createPattern(makeGrain(), "repeat")
+        const grainPattern = patternOnly ? null : ctx.createPattern(makeGrain(), "repeat")
         let cycT = 0
         let gapT = 0
         let last = -1
@@ -657,8 +660,10 @@ function __OriginkitBase_CipherReach({
         const waves: Wave[] = []
         // Pointer in CSS px; `sx/sy` trail it.
         const ptr = { x: 0, y: 0, sx: 0, sy: 0, inside: false, over: 0, gap: 0, press: false }
+        const pointerTarget = patternOnly ? root.closest("section") ?? root : root
 
         const locate = (e: PointerEvent) => {
+            if (patternOnly && (e.pointerType === "touch" || mq?.matches)) return
             const r = root.getBoundingClientRect()
             // Framer's canvas scales the frame; map back to its own px.
             ptr.x = ((e.clientX - r.left) * W) / Math.max(1, r.width)
@@ -676,14 +681,14 @@ function __OriginkitBase_CipherReach({
             locate(e)
             ptr.press = true
         }
-        root.addEventListener("pointermove", locate)
-        root.addEventListener("pointerenter", locate)
-        root.addEventListener("pointerleave", onLeave)
-        root.addEventListener("pointerdown", onDown)
+        pointerTarget.addEventListener("pointermove", locate)
+        pointerTarget.addEventListener("pointerenter", locate)
+        pointerTarget.addEventListener("pointerleave", onLeave)
+        if (!patternOnly) pointerTarget.addEventListener("pointerdown", onDown)
 
         const frame = (now: number) => {
             raf = requestAnimationFrame(frame)
-            if (!visible || W < 2 || H < 2) {
+            if (!visible || W < 2 || H < 2 || (patternOnly && !ptr.inside && ptr.over <= 0.002)) {
                 last = -1
                 return
             }
@@ -697,6 +702,7 @@ function __OriginkitBase_CipherReach({
             const sp = p.spark
             const dr = p.shimmer
             const reduce = !!(mq && mq.matches)
+            if (patternOnly && reduce) ptr.inside = false
             const sdt = reduce ? 0 : dt * (Math.max(0, p.speed) / 5)
 
             const cols = clamp(Math.round(p.columns), 20, 200)
@@ -715,6 +721,43 @@ function __OriginkitBase_CipherReach({
             const cell = unit * k
             const ox = W / 2 - (ART_COLS * unit) / 2
             const oy = H / 2 - (ART_ROWS * unit) / 2 + (activeOffsetY / 100) * H
+            const dotPx = Math.max(1, Math.round(((cell * look.dotSize) / 100) * dpr))
+
+            // Pointer: presence in ~250 ms, out in ~400 ms; position trails a little.
+            const ease = (tau: number) => 1 - Math.exp(-dt / tau)
+            ptr.over += ((ptr.inside ? 1 : 0) - ptr.over) * ease(ptr.inside ? 0.083 : 0.133)
+            ptr.sx += (ptr.x - ptr.sx) * ease(0.06)
+            ptr.sy += (ptr.y - ptr.sy) * ease(0.06)
+
+            const pu = (ptr.sx - ox) / unit
+            const pv = (ptr.sy - oy) / unit
+            const rad = 2 + clamp(rsp.reach, 0, 10) * 1.2
+            const lightK = (clamp(rsp.light, 0, 10) / 10) * ptr.over
+            const pointerOn = ptr.over > 0.002
+
+            const drawPointerGlow = () => {
+                if (!pointerOn || lightK <= 0) return
+                ctx.fillStyle = p.glyphColor
+                const ds = (dotPx * 1.6) / dpr
+                const rc = Math.ceil(rad / k)
+                const ci = Math.floor(pu / k)
+                const cj = Math.floor(pv / k)
+                for (let j = cj - rc; j <= cj + rc; j++) {
+                    for (let i = ci - rc; i <= ci + rc; i++) {
+                        const pr = smooth(rad, 0, Math.hypot((i + 0.5) * k - pu, (j + 0.5) * k - pv))
+                        if (pr <= 0) continue
+                        ctx.globalAlpha = 0.8 * pr * lightK
+                        ctx.fillRect(ox + (i + 0.5) * cell - ds / 2, oy + (j + 0.5) * cell - ds / 2, ds, ds)
+                    }
+                }
+            }
+
+            if (patternOnly) {
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+                ctx.clearRect(0, 0, W, H)
+                if (!reduce) drawPointerGlow()
+                return
+            }
 
             // Cells for what the frame shows, plus a margin for the hands'
             // reach and the pointer's push; rebuilt only when that changes.
@@ -737,20 +780,8 @@ function __OriginkitBase_CipherReach({
             const bt = p.buildIn && !reduce ? (buildStart < 0 ? 0 : (now - buildStart) / 1000) : buildEnd
             const building = bt < buildEnd
 
-            // Pointer: presence in ~250 ms, out in ~400 ms; position trails a little.
-            const ease = (tau: number) => 1 - Math.exp(-dt / tau)
-            ptr.over += ((ptr.inside ? 1 : 0) - ptr.over) * ease(ptr.inside ? 0.083 : 0.133)
-            ptr.sx += (ptr.x - ptr.sx) * ease(0.06)
-            ptr.sy += (ptr.y - ptr.sy) * ease(0.06)
-
-            // Pointer in the still's cells.
-            const pu = (ptr.sx - ox) / unit
-            const pv = (ptr.sy - oy) / unit
-            const rad = 2 + clamp(rsp.reach, 0, 10) * 1.2
-            const lightK = (clamp(rsp.light, 0, 10) / 10) * ptr.over
             const repelK = reduce ? 0 : (clamp(rsp.repel, 0, 10) / 10) * 2.2 * ptr.over
             const ripK = clamp(rsp.ripple, 0, 10) / 5
-            const pointerOn = ptr.over > 0.002
 
             // Hovering the gap draws the fingertips together.
             const inGap = ptr.inside && Math.hypot(pu - GAP_X, pv - GAP_Y) < GAP_RADIUS
@@ -807,7 +838,6 @@ function __OriginkitBase_CipherReach({
                 atlasKey = aKey
                 atlas = buildAtlas(slot, fontPx, p.glyphColor, p.accent)
             }
-            const dotPx = Math.max(1, Math.round(((cell * look.dotSize) / 100) * dpr))
             const dKey = [canvas.width, canvas.height, cell.toFixed(4), ox.toFixed(2), oy.toFixed(2), look.dotColor, dotPx, dpr].join("|")
             if (dKey !== dotKey || !dots) {
                 dotKey = dKey
@@ -835,22 +865,7 @@ function __OriginkitBase_CipherReach({
             ctx.clearRect(0, 0, W, H)
             ctx.drawImage(dots, 0, 0, W, H)
 
-            // The dot grid lights up under the pointer.
-            if (pointerOn && lightK > 0) {
-                ctx.fillStyle = p.glyphColor
-                const ds = (dotPx * 1.6) / dpr
-                const rc = Math.ceil(rad / k)
-                const ci = Math.floor(pu / k)
-                const cj = Math.floor(pv / k)
-                for (let j = cj - rc; j <= cj + rc; j++) {
-                    for (let i = ci - rc; i <= ci + rc; i++) {
-                        const pr = smooth(rad, 0, Math.hypot((i + 0.5) * k - pu, (j + 0.5) * k - pv))
-                        if (pr <= 0) continue
-                        ctx.globalAlpha = 0.8 * pr * lightK
-                        ctx.fillRect(ox + (i + 0.5) * cell - ds / 2, oy + (j + 0.5) * cell - ds / 2, ds, ds)
-                    }
-                }
-            }
+            drawPointerGlow()
 
             const alphaOf = toneTable(look.darkLevel / 100, look.midLevel / 100)
             const sz = Math.max(1, Math.round(((cell * look.squareSize) / 100) * dpr)) / dpr
@@ -1073,18 +1088,18 @@ function __OriginkitBase_CipherReach({
             ro.disconnect()
             io.disconnect()
             revealIo.disconnect()
-            root.removeEventListener("pointermove", locate)
-            root.removeEventListener("pointerenter", locate)
-            root.removeEventListener("pointerleave", onLeave)
-            root.removeEventListener("pointerdown", onDown)
+            pointerTarget.removeEventListener("pointermove", locate)
+            pointerTarget.removeEventListener("pointerenter", locate)
+            pointerTarget.removeEventListener("pointerleave", onLeave)
+            pointerTarget.removeEventListener("pointerdown", onDown)
         }
-    }, [])
+    }, [patternOnly])
 
     return (
         <div
             ref={rootRef}
-            role="img"
-            aria-label="Two hands written in code reaching toward each other"
+            role={patternOnly ? undefined : "img"}
+            aria-label={patternOnly ? undefined : "Two hands written in code reaching toward each other"}
             style={{
                 position: "relative",
                 width: "100%",
@@ -1136,7 +1151,7 @@ const __originkitPresetProps = {
         "dotColor": "#30303600",
         "glow": 20,
         "bevel": 20,
-        "vignette": 15,
+        "vignette": 0,
         "grain": 0
     },
     "spark": {
@@ -1161,7 +1176,7 @@ const __originkitPresetProps = {
     }
 };
 
-export default function CipherReach(props: Record<string, unknown>) {
+export default function CipherReach(props: CipherReachProps) {
     console.log("[CipherReach] RENDER called")
-    return <__OriginkitBase_CipherReach {...(__originkitPresetProps as Record<string, unknown>)} {...props} />;
+    return <__OriginkitBase_CipherReach {...__originkitPresetProps} {...props} />;
 }
