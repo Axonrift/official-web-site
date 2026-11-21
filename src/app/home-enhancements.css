@@ -261,16 +261,20 @@
 }
 
 .point-of-view {
+  margin-top: 64px;
+  scroll-margin-top: 100px;
+}
+
+.perspective-panel {
   position: relative;
   isolation: isolate;
   min-height: 690px;
-  margin-top: 64px;
   padding-top: 76px;
-  scroll-margin-top: 100px;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: var(--card-radius);
   background: var(--surface);
+  transform-origin: top center;
 }
 
 .perspective-copy {
@@ -1710,7 +1714,7 @@
     margin-right: 12px;
   }
 
-  .point-of-view {
+  .perspective-panel {
     min-height: 650px;
     padding-top: 60px;
   }
@@ -1981,8 +1985,11 @@
   }
 
   .point-of-view {
-    min-height: auto;
     margin-top: 45px;
+  }
+
+  .perspective-panel {
+    min-height: auto;
     padding-top: 46px;
   }
 
@@ -2209,10 +2216,6 @@
 
   .hero-capabilities li + li::before {
     margin-right: 10px;
-  }
-
-  .point-of-view {
-    min-height: auto;
   }
 
   .perspective-copy h2 {

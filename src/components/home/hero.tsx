@@ -7,15 +7,17 @@ export function Hero() {
   return (
     <section className="hero" aria-labelledby="hero-title">
       <div className="hero-pattern" aria-hidden="true">
-        <CipherReach
-          patternOnly
-          background="transparent"
-          glyphColor="#31d7ff"
-          scale={80}
-          mobileScale={80}
-          offsetY={0}
-          look={{ dotSize: 12 }}
-        />
+        <div className="hero-pattern-layer">
+          <CipherReach
+            patternOnly
+            background="transparent"
+            glyphColor="#31d7ff"
+            scale={80}
+            mobileScale={80}
+            offsetY={0}
+            look={{ dotSize: 12 }}
+          />
+        </div>
       </div>
       <div className="hero-layout wrap">
         <div className="hero-copy">

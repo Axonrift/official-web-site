@@ -138,6 +138,43 @@ export function PageMotion({ children }: { children: ReactNode }) {
               );
           }
 
+          const heroPattern = hero?.querySelector<HTMLElement>(".hero-pattern-layer");
+          if (hero && heroPattern) {
+            gsap.to(heroPattern, {
+              yPercent: wide ? 30 : 22,
+              opacity: 0.35,
+              ease: "none",
+              scrollTrigger: {
+                trigger: hero,
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
+              },
+            });
+          }
+
+          const perspective = container.querySelector<HTMLElement>("#about");
+          const perspectivePanel =
+            perspective?.querySelector<HTMLElement>(".perspective-panel");
+          if (perspective && perspectivePanel) {
+            gsap.fromTo(
+              perspectivePanel,
+              { scale: wide ? 0.85 : 0.94, y: wide ? 60 : 25, opacity: 0.55 },
+              {
+                scale: 1,
+                y: 0,
+                opacity: 1,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: perspective,
+                  start: "top 90%",
+                  end: "top 25%",
+                  scrub: 1.2,
+                },
+              },
+            );
+          }
+
           const reveals = new Map<HTMLElement, gsap.core.Tween>();
           container
             .querySelectorAll<HTMLElement>("[data-reveal]")
@@ -223,6 +260,11 @@ export function PageMotion({ children }: { children: ReactNode }) {
           return () => {
             active = false;
             disableSmoothWheel?.();
+            // A media change can interrupt a scrub before it reaches its resting styles.
+            heroPattern?.style.removeProperty("transform");
+            heroPattern?.style.removeProperty("opacity");
+            perspectivePanel?.style.removeProperty("transform");
+            perspectivePanel?.style.removeProperty("opacity");
             container.removeEventListener("focusin", revealFocusedContent);
             window.removeEventListener("hashchange", revealHashTarget);
           };
