@@ -179,9 +179,9 @@
   opacity: 1;
   transform: none;
 }
-.mobile-menu nav {
-  background: var(--surface);
-  border-color: var(--field-border);
+:root[data-theme="light"] .mobile-menu nav {
+  --accent-ink: #006d85;
+  --focus-ring: var(--accent-ink);
 }
 .mobile-menu nav a:is(:hover, :focus-visible),
 .mobile-menu nav a:last-child {

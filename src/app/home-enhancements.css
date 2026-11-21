@@ -1639,9 +1639,9 @@
     display: grid;
     gap: 4px;
     padding: 8px;
-    border: 1px solid #41515d;
+    border: 1px solid var(--field-border);
     border-radius: 16px;
-    background: #121a21;
+    background: var(--surface);
     box-shadow: 0 20px 36px rgb(0 0 0 / 25%);
     animation: menuUnblurReveal 260ms var(--ease-soft) forwards;
   }
@@ -1917,50 +1917,46 @@
 @media (max-width: 720px) {
   .hero-art {
     width: min(100%, 410px);
+    overflow: clip;
+    pointer-events: none;
   }
 
   .geometric-field {
-    height: clamp(150px, calc(45svh - 145px), 320px);
+    height: clamp(260px, 72vw, 320px);
   }
 
-  .field-object:nth-child(n + 9) {
+  .field-grid {
+    inset: 0;
+    background-size: 36px 36px;
+    background-position: center;
+  }
+
+  .field-object:not([data-mobile-shape]) {
     display: none;
   }
 
-  .field-object[data-object]:nth-child(3) {
-    --x: 18 !important;
-    --y: 20 !important;
-    width: 88px;
+  .field-object[data-mobile-shape="mark"] {
+    left: 50%;
+    top: 50%;
+    width: min(38%, 148px);
   }
 
-  .field-object[data-object]:nth-child(4) {
-    --x: 57 !important;
-    --y: 16 !important;
-    width: 96px;
+  .field-object[data-mobile-shape="ring"] {
+    left: 21%;
+    top: 22%;
+    width: min(11%, 44px);
   }
 
-  .field-object[data-object]:nth-child(5) {
-    --x: 88 !important;
-    --y: 40 !important;
-    width: 65px;
+  .field-object[data-mobile-shape="angle"] {
+    left: 82%;
+    top: 36%;
+    width: min(10.5%, 42px);
   }
 
-  .field-object[data-object]:nth-child(6) {
-    --x: 15 !important;
-    --y: 73 !important;
-    width: 65px;
-  }
-
-  .field-object[data-object]:nth-child(7) {
-    --x: 49 !important;
-    --y: 60 !important;
-    width: 140px;
-  }
-
-  .field-object[data-object]:nth-child(8) {
-    --x: 84 !important;
-    --y: 88 !important;
-    width: 84px;
+  .field-object[data-mobile-shape="tile"] {
+    left: 34%;
+    top: 86%;
+    width: min(7.5%, 29px);
   }
 
   .field-coordinate {

@@ -103,6 +103,14 @@ npm run build
 
 After building, use `npm start` to preview the production build.
 
+## Search launch and reporting
+
+The canonical homepage is `https://www.axonrift.com/`. Vercel redirects the bare domain to `www` and HTTP to HTTPS. Keep those redirects and Vercel’s preview indexing protection enabled. After deploying, check that `/`, `/robots.txt`, `/sitemap.xml`, and the social image return HTTP 200 on the canonical host. The sitemap should contain only the homepage, and the public site should be crawlable by Google, Bing, ChatGPT Search, and Perplexity.
+
+1. Verify `axonrift.com` as a domain property in [Google Search Console](https://search.google.com/search-console/) and add the site to [Bing Webmaster Tools](https://www.bing.com/webmasters/). Submit `https://www.axonrift.com/sitemap.xml` in both. Inspect the homepage for indexing and confirm that Search Console’s Search generative AI setting includes it.
+2. Record a pre-launch baseline if one exists. Otherwise use the first 28 days. At 30, 60, and 90 days, review non-branded impressions and clicks by country for website and ecommerce development, mobile app development, custom SaaS development, and MVP development. Review Google’s Generative AI impressions, Bing’s AI Performance citations, and ChatGPT and Perplexity referrers where reported.
+3. Tally qualified inquiries by service from the inbox. If the project already supports Vercel Web Analytics custom events, set `NEXT_PUBLIC_VERCEL_INQUIRY_EVENTS=true` in the production build to count successful form submissions. The `inquiry_submitted` event sends only the selected service IDs. Use the inbox to confirm which submissions became qualified leads.
+
 ## Current content limits
 
 The contact form needs your EmailJS configuration to send notifications to `contact@axonrift.com`. EmailJS processes the submitted details through the connected email service; the website does not store submissions in a database.

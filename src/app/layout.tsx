@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { site } from "@/lib/site";
 import { themeInitScript } from "@/lib/theme";
 
 import "@fontsource-variable/inter-tight";
@@ -8,11 +9,7 @@ import "./globals.css";
 import "./home-enhancements.css";
 import "./themes.css";
 
-export const metadata: Metadata = {
-  title: "Axonrift — Software for your business",
-  description:
-    "Axonrift designs and builds websites, mobile apps, custom SaaS platforms and MVPs around the problems your business needs to solve.",
-};
+export const metadata: Metadata = { metadataBase: new URL(site.url) };
 
 export const viewport: Viewport = { themeColor: "#0a1015" };
 

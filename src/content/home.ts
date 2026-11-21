@@ -17,7 +17,7 @@ export const services = [
     id: "website",
     title: "Websites & stores",
     description:
-      "Fast, polished websites and online stores that make it easy for customers to find you, get in touch, and buy.",
+      "Website design and ecommerce development that help customers find you, get in touch, and buy online.",
     topic: "Website or online store",
     inquiryLabel: "Websites",
     action: "Discuss a website or online store",
@@ -27,7 +27,7 @@ export const services = [
     id: "mobile",
     title: "Mobile apps",
     description:
-      "iOS and Android apps that make it easier for customers to book, shop, or use your service on the go.",
+      "Custom iOS and Android apps that let customers book appointments, shop, or use your service on the go.",
     topic: "Mobile app",
     inquiryLabel: "Mobile apps",
     action: "Discuss a mobile app",
@@ -37,7 +37,7 @@ export const services = [
     id: "custom-saas",
     title: "Custom SaaS",
     description:
-      "Subscription software designed around how your customers sign up, use the product, and pay.",
+      "Custom SaaS development for customer sign-up, product workflows, and billing.",
     topic: "Custom SaaS development",
     inquiryLabel: "SaaS platforms",
     action: "Discuss custom SaaS development",
@@ -47,7 +47,7 @@ export const services = [
     id: "mvp",
     title: "MVPs",
     description:
-      "A working first version you can test with real users, demo to investors, and improve with feedback.",
+      "MVP development for startups to test ideas with users and demo to investors.",
     topic: "MVP",
     inquiryLabel: "MVPs",
     action: "Discuss an MVP",
@@ -66,9 +66,19 @@ export const product = {
 export const contactEmail = "contact@axonrift.com";
 
 export const inquiryTopics = [
-  ...services.map(({ id, topic, inquiryLabel, icon }) => ({ id, topic, label: inquiryLabel, icon })),
-  { id: "ai-automation", topic: "AI automation", label: "AI automation", icon: "sparkles" as const },
-  { id: "other", topic: "Something else", label: "Something else", icon: "message" as const },
+  ...services.map(({ id, topic, inquiryLabel, icon }) => ({
+    id,
+    topic,
+    label: inquiryLabel,
+    icon,
+  })),
+  // { id: "ai-automation", topic: "AI automation", label: "AI automation", icon: "sparkles" as const },
+  {
+    id: "other",
+    topic: "Something else",
+    label: "Something else",
+    icon: "message" as const,
+  },
 ];
 
 export const pointOfView = {
@@ -169,25 +179,25 @@ export const faqs = [
     id: "what-we-build",
     question: "What can you help us build?",
     answer:
-      "We design and develop websites and online stores, mobile apps, custom SaaS platforms, and MVPs. We start with the problem you want to solve, then work out what makes sense to build.",
+      "We design and develop websites and online stores, iOS and Android apps, custom SaaS platforms, and MVPs. Our website work includes Sefia Books.",
   },
   {
     id: "starting-point",
     question: "Do we need a finished brief?",
     answer:
-      "A clear brief is welcome, but a problem you’re still figuring out is a good starting point too. Tell us what’s happening today and what you’d like to be able to do.",
+      "You can start with a problem or a rough idea. Tell us what’s getting in the way and what you’d like to do, and we’ll work with you to define what to build.",
   },
   {
     id: "first-version",
     question: "Can we start with a smaller first version?",
     answer:
-      "Yes. An MVP gives you a working first version to try with real users, share with investors, and improve with feedback. We agree on what that first release needs to do before building it.",
+      "Yes. A minimum viable product (MVP) is a working first release for testing an idea with real users. We agree on the core features first so you can learn what to improve before expanding.",
   },
   {
     id: "working-together",
     question: "How will we stay involved during the build?",
     answer:
-      "We share working versions as we go and use your feedback to refine the product. You stay involved as the idea moves from understanding the problem to testing the software.",
+      "We share working versions you can review from wherever you’re based. Your feedback guides what we refine as we move from agreeing on the scope to testing the software.",
   },
 ] as const;
 

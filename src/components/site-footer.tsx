@@ -3,9 +3,21 @@ import { Icon } from "@/components/icon";
 import { navigation, services } from "@/content/home";
 
 const socialLinks = [
-  { label: "LinkedIn", icon: "linkedin", href: "https://example.com/#linkedin" },
-  { label: "Facebook", icon: "facebook", href: "https://example.com/#facebook" },
-  { label: "Instagram", icon: "instagram", href: "https://example.com/#instagram" },
+  {
+    label: "LinkedIn",
+    icon: "linkedin",
+    href: "https://www.linkedin.com/company/axonrift",
+  },
+  {
+    label: "Facebook",
+    icon: "facebook",
+    href: "https://www.facebook.com/profile.php?id=61597005831223",
+  },
+  {
+    label: "Instagram",
+    icon: "instagram",
+    href: "https://www.instagram.com/axonrift.dev?lqvp=cDUzYndpY2c5ZXRn",
+  },
 ] as const;
 
 export function SiteFooter() {
