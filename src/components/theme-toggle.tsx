@@ -2,7 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { Icon } from "@/components/icon";
-import { applyTheme, documentTheme, themeStorageKey, type Theme } from "@/lib/theme";
+import {
+  applyTheme,
+  documentTheme,
+  themeStorageKey,
+  type Theme,
+} from "@/lib/theme";
 
 export function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>("dark");
@@ -26,15 +31,28 @@ export function ThemeToggle() {
     const next = documentTheme() === "dark" ? "light" : "dark";
     applyTheme(next);
     setTheme(next);
-    try { localStorage.setItem(themeStorageKey, next); } catch { /* Switching still works when storage is blocked. */ }
+    try {
+      localStorage.setItem(themeStorageKey, next);
+    } catch {
+      /* Switching still works when storage is blocked. */
+    }
   }
 
   return (
-    <button className="theme-toggle" type="button" onClick={toggle}
-      aria-label="Light mode" aria-pressed={theme === "light"}
-      title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}>
-      <span className="theme-sun"><Icon name="sun" /></span>
-      <span className="theme-moon"><Icon name="moon" /></span>
+    <button
+      className="theme-toggle"
+      type="button"
+      onClick={toggle}
+      aria-label="Light mode"
+      aria-pressed={theme === "light"}
+      title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+    >
+      <span className="theme-sun">
+        <Icon name="sun" />
+      </span>
+      <span className="theme-moon">
+        <Icon name="moon" />
+      </span>
     </button>
   );
 }

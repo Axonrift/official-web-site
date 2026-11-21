@@ -35,6 +35,22 @@ const paths = {
   box: (
     <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Zm0 9 8-4.5M12 12 4 7.5M12 12v9" />
   ),
+  linkedin: (
+    <>
+      <path d="M5 9v11m6 0V9m0 4a4 4 0 0 1 8 0v7" />
+      <circle cx="5" cy="5" r="1.25" fill="currentColor" stroke="none" />
+    </>
+  ),
+  facebook: (
+    <path d="M17.5 3h-2.7a4.8 4.8 0 0 0-4.8 4.8V10H7v3.5h3V21h3.8v-7.5h3l.7-3.5h-3.7V8.3c0-1 .5-1.8 1.8-1.8h1.9Z" fill="currentColor" stroke="none" />
+  ),
+  instagram: (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </>
+  ),
 };
 
 export function Icon({ name }: { name: keyof typeof paths }) {

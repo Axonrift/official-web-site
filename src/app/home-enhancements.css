@@ -1485,12 +1485,54 @@
 }
 
 .footer-bottom > span {
-  font-size: 11px;
+  font-size: 14px;
+}
+
+.footer-bottom .p {
+  margin: 0;
+  color: var(--subtle);
+  font-size: 14px;
+}
+
+.footer-bottom span {
+  color: var(--brand-accent);
+  font-size: 14px;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 8px;
+}
+
+.footer-socials a {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  color: var(--muted);
+  transition: color 200ms ease, border-color 200ms ease;
+}
+
+.footer-socials a:is(:hover, :focus-visible) {
+  color: var(--accent-ink);
+  border-color: var(--accent-ink);
+}
+
+.footer-socials svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .footer-bottom .quiet-link {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .footer-bottom .quiet-link:is(:hover, :focus-visible) {

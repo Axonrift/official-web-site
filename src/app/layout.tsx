@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { themeInitScript } from "@/lib/theme";
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </defs>
         </svg>
         {children}
+        <Analytics />
       </body>
     </html>
   );
